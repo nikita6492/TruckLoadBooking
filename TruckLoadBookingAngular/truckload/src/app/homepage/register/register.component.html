@@ -1,0 +1,86 @@
+<h1 mat-dialog-title>USER REGISTRATION</h1>
+<div mat-dialog-content>
+    <form [formGroup]="userForm">
+        <mat-form-field appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input formControlName="firstName" matInput placeholder="First Name" type="text" >
+        </mat-form-field>
+      
+      <mat-form-field appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input formControlName="lastName" matInput placeholder="Last Name" type="text">
+        </mat-form-field>
+      
+        <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input formControlName="email" matInput placeholder="Email" type="text">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input formControlName="password" matInput placeholder="Password" type="password">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Role</mat-label>
+            <mat-select formControlName="role" placeholder="Role">
+            <mat-option value="">Admin</mat-option>
+            <mat-option value="">Driver</mat-option>
+      </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Date of Birth</mat-label>
+            <input formControlName="date" matInput [matDatepicker]="picker">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>PAN</mat-label>
+            <input formControlName="pan" matInput placeholder="PAN" type="text">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Contact No</mat-label>
+            <input formControlName="contact" matInput placeholder="Contact" type="text">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Country</mat-label>
+            <mat-select
+              formControlName="country"
+              name="country"
+              
+            >
+              <mat-option *ngFor="let country of countries" [value]="country">
+                {{ country }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+         
+          <mat-form-field appearance="outline">
+            <mat-label>State</mat-label>
+            <mat-select
+            formControlName="state"
+              name="state"
+            >
+              <mat-option *ngFor="let state of states" [value]="state">
+                {{ state }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>City</mat-label>
+            <mat-select formControlName="city" name="city">
+              <mat-option *ngFor="let city of cities" [value]="city">
+                {{ city }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+    </form>
+<div mat-dialog-action [align]="'end'">
+    <button mat-raised-button color="primary" style="margin-right: 8px;" (click)="addUser()">Save</button>
+    <button mat-raised-button color="warn" mat-dialog-close>Exit</button>
+</div>
+    </div>

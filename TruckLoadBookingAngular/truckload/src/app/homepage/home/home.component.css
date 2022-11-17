@@ -1,0 +1,6 @@
+div {
+    /* Background pattern from Toptal Subtle Patterns */
+    background-image: url("../../../assets/truckImage2.jpg");
+    height: 400px;
+    width: 100%;
+ }
