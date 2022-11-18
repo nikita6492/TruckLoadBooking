@@ -4,46 +4,61 @@
         <mat-form-field appearance="outline">
             <mat-label>First Name</mat-label>
             <input formControlName="firstName" matInput placeholder="First Name" type="text" >
+            <mat-error *ngIf="userForm.get('firstName')?.hasError('required')">FirstName is required</mat-error>
         </mat-form-field>
       
       <mat-form-field appearance="outline">
           <mat-label>Last Name</mat-label>
           <input formControlName="lastName" matInput placeholder="Last Name" type="text">
+          <mat-error *ngIf="userForm.get('lastName')?.hasError('required')">Last Name is required</mat-error>
         </mat-form-field>
       
         <mat-form-field appearance="outline">
             <mat-label>Email</mat-label>
-            <input formControlName="email" matInput placeholder="Email" type="text">
+            <input formControlName="email" matInput placeholder="Email" type="email">
+            <mat-error *ngIf="userForm.get('email')?.hasError('required')">Email is required</mat-error>
+            <mat-error *ngIf="userForm.get('email')?.hasError('pattern')">Enter valid email</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Password</mat-label>
             <input formControlName="password" matInput placeholder="Password" type="password">
+            <mat-error *ngIf="userForm.get('password')?.hasError('required')">Password is required</mat-error>
+            <mat-error *ngIf="userForm.get('password')?.hasError('pattern')">Password should be 8 characters long and must contain 1 uppercase,1 lowercase and 1 special character</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Role</mat-label>
-            <mat-select formControlName="role" placeholder="Role">
+            <mat-select formControlName="role" placeholder="Role" >
             <mat-option value="">Admin</mat-option>
             <mat-option value="">Driver</mat-option>
       </mat-select>
+      
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Date of Birth</mat-label>
-            <input formControlName="date" matInput [matDatepicker]="picker">
+            <input formControlName="dob" matInput [matDatepicker]="picker" [max]="maxDate">
             <mat-hint>MM/DD/YYYY</mat-hint>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="userForm.get('dob')?.hasError('required')">DOB is required</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>PAN</mat-label>
             <input formControlName="pan" matInput placeholder="PAN" type="text">
+            <mat-error *ngIf="userForm.get('pan')?.hasError('required')">PAN is required</mat-error>
+            <mat-error *ngIf="userForm.get('pan')?.hasError('pattern')">Enter valid PAN</mat-error>
+            <mat-error *ngIf="userForm.get('pan')?.hasError('minLength')">PAN should be of 12 characters</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Contact No</mat-label>
-            <input formControlName="contact" matInput placeholder="Contact" type="text">
+            <input formControlName="contactNo" matInput placeholder="Contact" type="text">
+            <mat-error *ngIf="userForm.get('contactNo')?.hasError('required')">Contact No is required</mat-error>
+            <mat-error *ngIf="userForm.get('contactNo')?.hasError('pattern')">Enter valid Contact No</mat-error>
+            <mat-error *ngIf="userForm.get('contactNo')?.hasError('minLength')">Contact No should be of 10 characters</mat-error>
+         
           </mat-form-field>
 
           <mat-form-field appearance="outline">
@@ -57,6 +72,7 @@
                 {{ country }}
               </mat-option>
             </mat-select>
+            
           </mat-form-field>
          
           <mat-form-field appearance="outline">
@@ -69,6 +85,7 @@
                 {{ state }}
               </mat-option>
             </mat-select>
+            
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>City</mat-label>
@@ -77,10 +94,10 @@
                 {{ city }}
               </mat-option>
             </mat-select>
-          </mat-form-field>
+            </mat-form-field>
     </form>
 <div mat-dialog-action [align]="'end'">
-    <button mat-raised-button color="primary" style="margin-right: 8px;" (click)="addUser()">Save</button>
+    <button [disabled]="!userForm.valid" mat-raised-button color="primary" style="margin-right: 8px;" (click)="addUser()">Save</button>
     <button mat-raised-button color="warn" mat-dialog-close>Exit</button>
 </div>
     </div>

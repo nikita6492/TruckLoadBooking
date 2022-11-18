@@ -1,6 +1,7 @@
 package com.tlb.entity;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,11 +38,11 @@ public class User {
 	private String lastName;
 	private String password;
 	private String email;
-	private Date dob;
+	private LocalDate dob;
 	private String role;
 	private String contactNo;
 	private String pan;
-	private Date activationDate;
+	private LocalDate activationDate;
 	private Long age;
 	private String country;
 	private String state;

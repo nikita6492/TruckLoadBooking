@@ -1,20 +1,27 @@
 <h1 mat-dialog-title>USER LOGIN</h1>
 <div mat-dialog-content>
     <form [formGroup]="userForm">
+        <div>
         <mat-form-field appearance="outline">
             <mat-label>Username</mat-label>
-            <input formControlName="username" matInput placeholder="Enter Username" type="text">
+            <input formControlName="email" matInput placeholder="Enter Username" type="email" >
+            <mat-error *ngIf="userForm.get('email')?.hasError('required')">Email is required</mat-error>
+            <mat-error *ngIf="userForm.get('email')?.hasError('pattern')">Enter valid email</mat-error>
           </mat-form-field>
+          
+      </div>
       
+      <div>
           <mat-form-field appearance="outline">
               <mat-label>Password</mat-label>
-              <input formControlName="password"  matInput placeholder="Enter Password" type="password">
-        
+              <input formControlName="password"  matInput placeholder="Enter Password" type="password" >
+              <mat-error *ngIf="userForm.get('password')?.hasError('required')">Password is required</mat-error>
+              <mat-error *ngIf="userForm.get('password')?.hasError('pattern')">Password should be 8 characters long and must contain 1 uppercase,1 lowercase and 1 special character</mat-error>
             </mat-form-field>
-      
+           </div>
     </form>
 <div mat-dialog-action [align]="'end'">
-    <button mat-raised-button color="primary" style="margin-right: 8px;" (click)="login()">Login</button>
+    <button [disabled]="!userForm.valid" mat-raised-button color="primary" style="margin-right: 8px;" (click)="login()">Login</button>
     <button mat-raised-button color="warn" mat-dialog-close>Exit</button>
 </div>
     </div>

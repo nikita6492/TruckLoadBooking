@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TlbService } from 'src/app/tlb.service';
+import { User } from 'src/app/user';
 
 @Component({
   selector: 'app-register',
@@ -15,6 +16,8 @@ export class RegisterComponent implements OnInit {
   countries!: string[];
   states!: string[];
   cities!: string[];
+  user!:User;
+  maxDate=new Date();
 
   country = new FormControl(null, [Validators.required]);
   state = new FormControl({ value: null, disabled: true }, [
@@ -56,11 +59,11 @@ export class RegisterComponent implements OnInit {
     this.userForm=this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-      date: ['', Validators.required],
-      contact: ['', Validators.required],
-      pan: ['', Validators.required],
+      email: ['', [Validators.required,Validators.pattern("[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}")]],
+      password: ['', [Validators.required,Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")]],
+      dob: ['', Validators.required],
+      contactNo: ['', [Validators.required,Validators.pattern("^[0-9]*$"),Validators.minLength(10)]],
+      pan: ['', [Validators.required, Validators.pattern("^[a-zA-Z0-9]*$"),Validators.minLength(12)]],
       role: ['', Validators.required],
       country: ['', Validators.required],
       state: ['', Validators.required],
@@ -70,6 +73,9 @@ export class RegisterComponent implements OnInit {
   
 
   addUser(){
-
+    this.user.firstName=this.userForm.controls['firstName'].value;
+    this.user.lastName=this.userForm.controls['lastName'].value;
+    this.user.email=this.userForm.controls['email'].value;
+    this.user.password=this.userForm.controls['password'].value;
   }
 }
