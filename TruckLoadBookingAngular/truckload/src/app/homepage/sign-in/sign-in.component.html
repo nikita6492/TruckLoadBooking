@@ -16,12 +16,11 @@
               <mat-label>Password</mat-label>
               <input formControlName="password"  matInput placeholder="Enter Password" type="password" >
               <mat-error *ngIf="userForm.get('password')?.hasError('required')">Password is required</mat-error>
-              <mat-error *ngIf="userForm.get('password')?.hasError('pattern')">Password should be 8 characters long and must contain 1 uppercase,1 lowercase and 1 special character</mat-error>
             </mat-form-field>
            </div>
     </form>
 <div mat-dialog-action [align]="'end'">
-    <button [disabled]="!userForm.valid" mat-raised-button color="primary" style="margin-right: 8px;" (click)="login()">Login</button>
+    <button [disabled]="!userForm.valid" mat-raised-button color="primary" style="margin-right: 8px;" (click)="login()"  mat-dialog-close>Login</button>
     <button mat-raised-button color="warn" mat-dialog-close>Exit</button>
 </div>
     </div>

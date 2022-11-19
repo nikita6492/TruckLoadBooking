@@ -71,7 +71,7 @@ public class UserController {
 		user.setActivationDate(LocalDate.now());
 		userObj=userService.registerUser(user);
 		if(userObj!=null) {
-		return new ResponseEntity("User Created !!", HttpStatus.CREATED);
+		return new ResponseEntity("User Created", HttpStatus.CREATED);
 		}else {
 			return new ResponseEntity("User not created !!", HttpStatus.BAD_REQUEST);
 		}

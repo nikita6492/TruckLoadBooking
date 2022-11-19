@@ -90,7 +90,7 @@ public class LoadController {
 	public ResponseEntity<?> createLoad(@RequestBody TruckLoad load) throws Exception {
 		try {
 		loadService.createLoad(load);
-		return new ResponseEntity("User created!!",HttpStatus.OK);
+		return new ResponseEntity("Load created!!",HttpStatus.OK);
 		}catch(Exception ex) {
 			return new ResponseEntity("Exception Occurred!!",HttpStatus.INTERNAL_SERVER_ERROR);
 		}

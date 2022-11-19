@@ -1,1 +1,36 @@
-<p>admin-search works!</p>
+<h1 mat-dialog-title>SEARCH LOAD</h1>
+<div mat-dialog-content>
+    <form [formGroup]="searchForm">
+        <div>
+        <mat-form-field appearance="outline">
+            <mat-label>Load Id</mat-label>
+            <input formControlName="loadId" matInput placeholder="Enter Load ID" type="loadId" >
+            
+          </mat-form-field>
+          
+      </div>
+      
+      <div>
+        <mat-form-field appearance="outline">
+            <mat-label>Pickup Date</mat-label>
+            <input formControlName="pickupDate" matInput [matDatepicker]="picker" >
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Pickup Location</mat-label>
+                <input formControlName="pickupLocation" matInput placeholder="Enter Pickup Location" type="itemType" >
+              </mat-form-field>
+              
+          </div>
+          
+    </form>
+<div mat-dialog-action [align]="'end'">
+    <button mat-raised-button color="primary" style="margin-right: 8px;" (click)="search()"  mat-dialog-close>Search</button>
+    <button mat-raised-button color="warn" mat-dialog-close>Exit</button>
+</div>
+    </div>

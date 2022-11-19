@@ -29,11 +29,16 @@
 
           <mat-form-field appearance="outline">
             <mat-label>Role</mat-label>
-            <mat-select formControlName="role" placeholder="Role" >
-            <mat-option value="">Admin</mat-option>
-            <mat-option value="">Driver</mat-option>
-      </mat-select>
-      
+            <mat-select
+              formControlName="role"
+              name="role"
+              
+            >
+              <mat-option *ngFor="let role of userRole" [value]="role">
+                {{ role }}
+              </mat-option>
+           
+            </mat-select>
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Date of Birth</mat-label>
@@ -49,7 +54,7 @@
             <input formControlName="pan" matInput placeholder="PAN" type="text">
             <mat-error *ngIf="userForm.get('pan')?.hasError('required')">PAN is required</mat-error>
             <mat-error *ngIf="userForm.get('pan')?.hasError('pattern')">Enter valid PAN</mat-error>
-            <mat-error *ngIf="userForm.get('pan')?.hasError('minLength')">PAN should be of 12 characters</mat-error>
+            <mat-error *ngIf="userForm.get('pan')?.hasError('maxlength')">PAN should be of 12 characters</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
@@ -57,7 +62,7 @@
             <input formControlName="contactNo" matInput placeholder="Contact" type="text">
             <mat-error *ngIf="userForm.get('contactNo')?.hasError('required')">Contact No is required</mat-error>
             <mat-error *ngIf="userForm.get('contactNo')?.hasError('pattern')">Enter valid Contact No</mat-error>
-            <mat-error *ngIf="userForm.get('contactNo')?.hasError('minLength')">Contact No should be of 10 characters</mat-error>
+            <mat-error *ngIf="userForm.get('contactNo')?.hasError('maxlength')">Contact No should be of 10 characters</mat-error>
          
           </mat-form-field>
 
@@ -97,7 +102,7 @@
             </mat-form-field>
     </form>
 <div mat-dialog-action [align]="'end'">
-    <button [disabled]="!userForm.valid" mat-raised-button color="primary" style="margin-right: 8px;" (click)="addUser()">Save</button>
+    <button [disabled]="!userForm.valid" mat-raised-button color="primary" style="margin-right: 8px;" (click)="addUser()" mat-dialog-close>Save</button>
     <button mat-raised-button color="warn" mat-dialog-close>Exit</button>
 </div>
     </div>

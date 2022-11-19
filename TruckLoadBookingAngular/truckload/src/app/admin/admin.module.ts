@@ -19,8 +19,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AdminSearchComponent } from './admin-search/admin-search.component';
 import { ViewComponent } from './view/view.component';
-
-
+import { CreateLoadComponent } from './create-load/create-load.component';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { LoadTableComponent } from './load-table/load-table.component';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,9 @@ import { ViewComponent } from './view/view.component';
     AdminFooterComponent,
     AdminPageComponent,
     AdminSearchComponent,
-    ViewComponent
+    ViewComponent,
+    CreateLoadComponent,
+    LoadTableComponent
   ],
   imports: [
     CommonModule,
@@ -46,7 +51,12 @@ import { ViewComponent } from './view/view.component';
     MatRadioModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
-  ]
+    HttpClientModule,
+    MatSnackBarModule,
+    MatTableModule
+  ],
+  providers: [{
+    provide:MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue:{duration:2500}
+  }],
 })
 export class AdminModule { }

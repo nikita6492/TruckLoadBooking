@@ -1,0 +1,66 @@
+<h1 mat-dialog-title>CREATE LOAD</h1>
+<div mat-dialog-content>
+    <form [formGroup]="loadForm">
+        <div>
+        <mat-form-field appearance="outline">
+            <mat-label>Item Type</mat-label>
+            <input formControlName="itemType" matInput placeholder="Enter Item Type" type="itemType" >
+            <mat-error *ngIf="loadForm.get('itemType')?.hasError('required')">Item Type is required</mat-error>
+          </mat-form-field>
+          
+      </div>
+      
+      <div>
+        <mat-form-field appearance="outline">
+            <mat-label>Pickup Date</mat-label>
+            <input formControlName="pickupDate" matInput [matDatepicker]="picker" [min]="minDate">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="loadForm.get('pickupDate')?.hasError('required')">Pickup Date is required</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Pickup Location</mat-label>
+                <input formControlName="pickupLocation" matInput placeholder="Enter Pickup Location" type="itemType" >
+                <mat-error *ngIf="loadForm.get('pickupLocation')?.hasError('required')">Pickup Location is required</mat-error>
+              </mat-form-field>
+              
+          </div>
+          <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Drop Date</mat-label>
+                <input formControlName="dropDate" matInput [matDatepicker]="picker1" [min]="minDate">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+                <mat-error *ngIf="loadForm.get('dropDate')?.hasError('required')">Drop Date is required</mat-error>
+              </mat-form-field>
+            </div>
+    
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Drop Location</mat-label>
+                    <input formControlName="dropLocation" matInput placeholder="Enter Drop Location" type="itemType" >
+                    <mat-error *ngIf="loadForm.get('dropLocation')?.hasError('required')">Drop Location is required</mat-error>
+                  </mat-form-field>
+                  
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Booking Date</mat-label>
+                    <input formControlName="bookingDate" matInput [matDatepicker]="picker2" [min]="minDate">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                    <mat-error *ngIf="loadForm.get('bookingDate')?.hasError('required')">Booking Date is required</mat-error>
+                  </mat-form-field>
+                </div>
+    </form>
+<div mat-dialog-action [align]="'end'">
+    <button [disabled]="!loadForm.valid" mat-raised-button color="primary" style="margin-right: 8px;" (click)="create()"  mat-dialog-close>Create</button>
+    <button mat-raised-button color="warn" mat-dialog-close>Exit</button>
+</div>
+    </div>

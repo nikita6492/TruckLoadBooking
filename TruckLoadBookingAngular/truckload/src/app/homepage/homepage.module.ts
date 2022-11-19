@@ -19,7 +19,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatRadioModule} from '@angular/material/radio'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 @NgModule({
   declarations: [
     HompageHeaderComponent,
@@ -44,7 +45,12 @@ import { HttpClientModule } from '@angular/common/http';
     MatRadioModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
-  ]
+    HttpClientModule,
+    MatSnackBarModule
+    
+  ],
+  providers: [{
+    provide:MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue:{duration:2500}
+  }],
 })
 export class HomepageModule { }
