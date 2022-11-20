@@ -47,6 +47,15 @@
     </ng-container>
 
     
+    <ng-container matColumnDef="Operations">
+      <th mat-header-cell *matHeaderCellDef> Operations </th>
+      <td mat-cell *matCellDef="let element" >  <button mat-raised-button color="primary" 
+        *ngIf="element.bookingStatus == null"
+        (click)="book(element.loadId)"
+      >
+        Book
+      </button></td>
+    </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

@@ -38,6 +38,7 @@ export class AdminSearchComponent implements OnInit {
       data=>{
         this.showLoadDetails=true;
         this.truckLoadDetails=data;
+        console.log(this.truckLoadDetails);
         this.dialogref.open(LoadTableComponent,{
           data:this.truckLoadDetails
         })

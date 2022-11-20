@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateLoadComponent } from '../create-load/create-load.component';
 import { AdminSearchComponent } from '../admin-search/admin-search.component';
+import { ViewComponent } from '../view/view.component';
+import { TlbService } from 'src/app/tlb.service';
+import { Truckload } from 'src/app/truckload';
 
 @Component({
   selector: 'app-admin-header',
@@ -11,7 +14,8 @@ import { AdminSearchComponent } from '../admin-search/admin-search.component';
 })
 export class AdminHeaderComponent implements OnInit {
 
-  constructor(private route:Router, private dialog:MatDialog) { }
+  truckLoadDetails!:any;
+  constructor(private route:Router, private dialog:MatDialog, private tlbservice: TlbService) { }
 
   ngOnInit(): void {
   }
@@ -32,6 +36,14 @@ this.route.navigate(['/logout']);
 
 }
 view(){
-  
+
+  this.tlbservice.viewLoad().subscribe(
+    data=>{
+      this.truckLoadDetails=data;
+      this.dialog.open(ViewComponent,{
+        data:this.truckLoadDetails
+      })
+    }
+  )
 }
 }

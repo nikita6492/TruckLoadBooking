@@ -42,5 +42,9 @@ public interface LoadService {
 	public List<TruckLoad> viewInTransitLoads(String userId);
 
 	public List<TruckLoad> viewCompletedLoads(String userId);
+
+	TruckLoad intransitLoad(String loadId, String driverID);
+
+	TruckLoad completeLoad(String loadId, String driverID);
 	
 }

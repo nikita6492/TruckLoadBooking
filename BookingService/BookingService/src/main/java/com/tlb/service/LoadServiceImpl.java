@@ -76,6 +76,24 @@ public class LoadServiceImpl implements LoadService {
 		TruckLoad loadObj=loadRepository.save(load.get());
 		return loadObj;
 	}
+	
+	@Override
+	public TruckLoad intransitLoad(String loadId, String driverID) {
+		Optional<TruckLoad> load=loadRepository.findById(loadId);
+		load.get().setBookingStatus("InTransit");
+		load.get().setDriverId(driverID);
+		TruckLoad loadObj=loadRepository.save(load.get());
+		return loadObj;
+	}
+	
+	@Override
+	public TruckLoad completeLoad(String loadId, String driverID) {
+		Optional<TruckLoad> load=loadRepository.findById(loadId);
+		load.get().setBookingStatus("Completed");
+		load.get().setDriverId(driverID);
+		TruckLoad loadObj=loadRepository.save(load.get());
+		return loadObj;
+	}
 
 	@Override
 	public TruckLoad cancelLoad(String loadId) {

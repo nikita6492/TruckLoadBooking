@@ -44,20 +44,87 @@ export class TlbService {
   }
 
   public searchLoadForAdmin(load:Truckload){
-    if(load.loadId!=null && load.pickupDate==null && load.pickupLocation==null) {
+    if(load.loadId!=null && (load.pickupDate==null || !load.pickupDate ) && (load.pickupLocation==null || !load.pickupLocation)) {
 			this.url=`${this.truckloadUrl}/search?loadId=${load.loadId}`;
-		}else if(load.loadId==null && load.pickupDate!=null && load.pickupLocation==null) {
+		}else if((load.loadId==null || !load.loadId) && load.pickupDate!=null && (load.pickupLocation==null || !load.pickupLocation)) {
 			this.url=`${this.truckloadUrl}/search?&pickupDate=${load.pickupDate}`;
-		}else if(load.loadId==null && load.pickupDate==null && load.pickupLocation!=null) {
+		}else if((load.loadId==null || !load.loadId) && (load.pickupDate==null || !load.pickupDate ) && (load.pickupLocation==null || !load.pickupLocation)) {
 			this.url=`${this.truckloadUrl}/search?pickupLocation=${load.pickupLocation}`;
-		}else if(load.loadId!=null && load.pickupDate!=null && load.pickupLocation==null) {
+		}else if(load.loadId!=null && load.pickupDate!=null && (load.pickupLocation==null || !load.pickupLocation)) {
 			this.url=`${this.truckloadUrl}/search?loadId=${load.loadId}&pickupDate=${load.pickupDate}`;
-		}else if(load.loadId!=null && load.pickupDate==null && load.pickupLocation!=null) {
+		}else if(load.loadId!=null && (load.pickupDate==null || !load.pickupDate ) && load.pickupLocation!=null) {
 			this.url=`${this.truckloadUrl}/search?loadId=${load.loadId}&pickupLocation=${load.pickupLocation}`;
-		}else if(load.loadId==null && load.pickupDate!=null && load.pickupLocation!=null) {
+		}else if((load.loadId==null || !load.loadId) && load.pickupDate!=null && load.pickupLocation!=null) {
 			this.url=`${this.truckloadUrl}/search?pickupDate=${load.pickupDate}&pickupLocation=${load.pickupLocation}`;
 		}else if(load.loadId!=null && load.pickupDate!=null && load.pickupLocation!=null) {
 			this.url=`${this.truckloadUrl}/search?loadId=${load.loadId}&pickupDate=${load.pickupDate}&pickupLocation=${load.pickupLocation}`;
+		}
+    console.log(this.url)
+    return this._http.get<any>(this.url);
+
+  }
+
+  public cancelLoad(loadId:number){
+    let resp=this._http.post(`${this.truckloadUrl}/cancelLoad/${loadId}`,{responseType: 'text' as 'json'});
+    return resp;
+  }
+
+  public viewLoad(){
+    let resp = this._http.get(`${this.truckloadUrl}/viewAllLoads`);
+    return resp;
+  }
+
+  public bookLoad(loadId:number){
+    let user_email = sessionStorage.getItem("user_email");
+    let resp=this._http.post(`${this.truckloadUrl}/bookLoad/${loadId}/${user_email}`,{responseType: 'text' as 'json'});
+    return resp;
+  }
+
+  public intransitLoad(loadId:number){
+    let user_email = sessionStorage.getItem("user_email");
+    let resp=this._http.post(`${this.truckloadUrl}/intransitLoad/${loadId}/${user_email}`,{responseType: 'text' as 'json'});
+    return resp;
+  }
+
+  public completeLoad(loadId:number){
+    let user_email = sessionStorage.getItem("user_email");
+    let resp=this._http.post(`${this.truckloadUrl}/completeLoad/${loadId}/${user_email}`,{responseType: 'text' as 'json'});
+    return resp;
+  }
+
+  public viewBookedLoad(){
+    let user_email = sessionStorage.getItem("user_email");
+    let resp = this._http.get(`${this.truckloadUrl}/viewBookedLoads/${user_email}`);
+    return resp;
+  }
+
+  public viewIntransitLoad(){
+    let user_email = sessionStorage.getItem("user_email");
+    let resp = this._http.get(`${this.truckloadUrl}/viewInTransitLoads/${user_email}`);
+    return resp;
+  }
+
+  public viewCompletedLoad(){
+    let user_email = sessionStorage.getItem("user_email");
+    let resp = this._http.get(`${this.truckloadUrl}/viewCompletedLoads/${user_email}`);
+    return resp;
+  }
+
+  public searchLoadForDriver(load:Truckload){
+    if(load.loadId!=null && (load.pickupDate==null || !load.pickupDate ) && (load.pickupLocation==null || !load.pickupLocation)) {
+			this.url=`${this.truckloadUrl}/search/driver?loadId=${load.loadId}`;
+		}else if((load.loadId==null || !load.loadId) && load.pickupDate!=null && (load.pickupLocation==null || !load.pickupLocation)) {
+			this.url=`${this.truckloadUrl}/search/driver?&pickupDate=${load.pickupDate}`;
+		}else if((load.loadId==null || !load.loadId) && (load.pickupDate==null || !load.pickupDate ) && (load.pickupLocation==null || !load.pickupLocation)) {
+			this.url=`${this.truckloadUrl}/search/driver?pickupLocation=${load.pickupLocation}`;
+		}else if(load.loadId!=null && load.pickupDate!=null && (load.pickupLocation==null || !load.pickupLocation)) {
+			this.url=`${this.truckloadUrl}/search/driver?loadId=${load.loadId}&pickupDate=${load.pickupDate}`;
+		}else if(load.loadId!=null && (load.pickupDate==null || !load.pickupDate ) && load.pickupLocation!=null) {
+			this.url=`${this.truckloadUrl}/search/driver?loadId=${load.loadId}&pickupLocation=${load.pickupLocation}`;
+		}else if((load.loadId==null || !load.loadId) && load.pickupDate!=null && load.pickupLocation!=null) {
+			this.url=`${this.truckloadUrl}/search/driver?pickupDate=${load.pickupDate}&pickupLocation=${load.pickupLocation}`;
+		}else if(load.loadId!=null && load.pickupDate!=null && load.pickupLocation!=null) {
+			this.url=`${this.truckloadUrl}/search/driver?loadId=${load.loadId}&pickupDate=${load.pickupDate}&pickupLocation=${load.pickupLocation}`;
 		}
     console.log(this.url)
     return this._http.get<any>(this.url);

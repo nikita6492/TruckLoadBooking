@@ -97,23 +97,47 @@ public class LoadController {
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@PutMapping("/api/v1/tlb/cancelLoad/{loadId}")
+	@PostMapping("/api/v1/tlb/cancelLoad/{loadId}")
 	public ResponseEntity<?> cancelLoad(@PathVariable("loadId") String loadId){
 		try {
 			loadService.cancelLoad(loadId);
-			return new ResponseEntity("Load Cancelled!!",HttpStatus.OK);
+			return new ResponseEntity("",HttpStatus.OK);
 			}catch(Exception ex) {
 				return new ResponseEntity("Exception Occurred!!",HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@PutMapping("/api/v1/tlb/bookLoad/{loadId}/{email}")
+	@PostMapping("/api/v1/tlb/bookLoad/{loadId}/{email}")
 	public ResponseEntity<?> bookLoad(@PathVariable("loadId") String loadId, @PathVariable("email") String email){
 		try {
 			User user=restTemplate.getForObject("http://localhost:8090/api/v1/tlb/fetchDriverId/"+email, User.class);
 			loadService.bookLoad(loadId, user.getUserId());
-			return new ResponseEntity("Load Cancelled!!",HttpStatus.OK);
+			return new ResponseEntity("",HttpStatus.OK);
+			}catch(Exception ex) {
+				return new ResponseEntity("Exception Occurred!!",HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@PostMapping("/api/v1/tlb/intransitLoad/{loadId}/{email}")
+	public ResponseEntity<?> inTransitLoad(@PathVariable("loadId") String loadId, @PathVariable("email") String email){
+		try {
+			User user=restTemplate.getForObject("http://localhost:8090/api/v1/tlb/fetchDriverId/"+email, User.class);
+			loadService.intransitLoad(loadId, user.getUserId());
+			return new ResponseEntity("",HttpStatus.OK);
+			}catch(Exception ex) {
+				return new ResponseEntity("Exception Occurred!!",HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@PostMapping("/api/v1/tlb/completeLoad/{loadId}/{email}")
+	public ResponseEntity<?> completeLoad(@PathVariable("loadId") String loadId, @PathVariable("email") String email){
+		try {
+			User user=restTemplate.getForObject("http://localhost:8090/api/v1/tlb/fetchDriverId/"+email, User.class);
+			loadService.completeLoad(loadId, user.getUserId());
+			return new ResponseEntity("",HttpStatus.OK);
 			}catch(Exception ex) {
 				return new ResponseEntity("Exception Occurred!!",HttpStatus.INTERNAL_SERVER_ERROR);
 			}
@@ -146,6 +170,17 @@ public class LoadController {
 		try {
 			User user=restTemplate.getForObject("http://localhost:8090/api/v1/tlb/fetchDriverId/"+email, User.class);
 			List<TruckLoad> load=loadService.viewCompletedLoads(user.getUserId());
+			return load;
+			}catch(Exception ex) {
+				throw new Exception(ex.getMessage());
+			}
+	}
+	
+	@GetMapping("/api/v1/tlb/viewAllLoads")
+	public List<TruckLoad> viewAllLoads() throws Exception{
+		try {
+			
+			List<TruckLoad> load=loadService.viewAllLoads();
 			return load;
 			}catch(Exception ex) {
 				throw new Exception(ex.getMessage());

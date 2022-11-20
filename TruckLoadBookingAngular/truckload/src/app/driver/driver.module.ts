@@ -17,7 +17,12 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatRadioModule} from '@angular/material/radio'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatTableModule} from '@angular/material/table';
 import { SearchComponent } from './search/search.component';
+import { DriverViewComponent } from './driver-view/driver-view.component';
+import { DriverLoadTableComponent } from './driver-load-table/driver-load-table.component';
 
 
 
@@ -26,7 +31,9 @@ import { SearchComponent } from './search/search.component';
     DiverHeaderComponent,
     DriverFooterComponent,
     DriverPageComponent,
-    SearchComponent
+    SearchComponent,
+    DriverViewComponent,
+    DriverLoadTableComponent
   ],
   imports: [
     CommonModule,
@@ -44,7 +51,12 @@ import { SearchComponent } from './search/search.component';
     MatRadioModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
-  ]
+    HttpClientModule,
+    MatSnackBarModule,
+    MatTableModule
+  ],
+  providers: [{
+    provide:MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue:{duration:2500}
+  }],
 })
 export class DriverModule { }

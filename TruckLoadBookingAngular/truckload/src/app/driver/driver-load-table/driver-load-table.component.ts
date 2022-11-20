@@ -6,12 +6,11 @@ import { TlbService } from 'src/app/tlb.service';
 import { Truckload } from 'src/app/truckload';
 
 @Component({
-  selector: 'app-load-table',
-  templateUrl: './load-table.component.html',
-  styleUrls: ['./load-table.component.css']
+  selector: 'app-driver-load-table',
+  templateUrl: './driver-load-table.component.html',
+  styleUrls: ['./driver-load-table.component.css']
 })
-export class LoadTableComponent implements OnInit {
-
+export class DriverLoadTableComponent implements OnInit {
   truckLoadDetails!:Truckload[];
   displayedColumns: string[] = ['loadId', 'pickupDate', 'pickupLocation', 'dropDate', 'dropLocation','itemType', 'driverId', 'bookingStatus','Operations'];
   showCancelButton:Boolean=false;
@@ -24,16 +23,17 @@ export class LoadTableComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  cancel(loadId:number){
+  book(loadId:number){
     for (let i = 0; i < this.truckLoadDetails.length; i++) {
       if (this.truckLoadDetails[i].loadId === loadId) {
-        
-        this.tlbservice.cancelLoad(loadId).subscribe(
+        this.truckLoadDetails.splice(i,1);
+        this.truckLoadDataSource = new MatTableDataSource(this.truckLoadDetails);
+        this.tlbservice.bookLoad(loadId).subscribe(
           data => {
             console.log(data);
             this.truckLoadDetails.splice(i,1);
         this.truckLoadDataSource = new MatTableDataSource(this.truckLoadDetails);
-            this.snackbar.open("Truck Load Cancelled !!")
+            this.snackbar.open("Truck Load Booked !!")
             
           },error=>{
             console.log(error);
@@ -44,4 +44,5 @@ export class LoadTableComponent implements OnInit {
     }
 
   }
+
 }
