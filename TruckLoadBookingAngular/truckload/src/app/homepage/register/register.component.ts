@@ -94,7 +94,14 @@ export class RegisterComponent implements OnInit {
     this.service.register(this.user).subscribe(
       data=>{
         this.response=data;
-        this.snackbar.open("User Registered!!");
+        console.log(this.response);
+        if(this.response=="Already Registered"){
+        this.snackbar.open("Already Registered");
+        }else if(this.response=="Age Issue"){
+          this.snackbar.open("Age should be greater than 18 !!")
+        }else if(this.response=="User Created"){
+          this.snackbar.open("User Created !!")
+        }
       },
       error=>{
         console.log(error);

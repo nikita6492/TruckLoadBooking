@@ -43,8 +43,13 @@ export class SignInComponent implements OnInit {
         }else if(this.response=="Admin"){
           this._route.navigate(['/admin']);
           this._snackbar.open("User Successfully Logged In!!");
+        }else if(this.response=="Password Incorrect"){
+          this._snackbar.open("Password is incorrect!!");
+        }else if(this.response=="User not found"){
+          this._snackbar.open("User not found!!");
         }
       },error=>{
+        console.log(error);
         this._snackbar.open("Something went wrong !!");
       }
       )

@@ -34,11 +34,11 @@ public class UserController {
 				return new ResponseEntity(userObj.getRole(),HttpStatus.OK);
 				}
 				else {
-					return new ResponseEntity("Password Incorrect!!",HttpStatus.NOT_FOUND);
+					return new ResponseEntity("Password Incorrect",HttpStatus.OK);
 				}
 		}		
 		else {
-			return new ResponseEntity("User not found!!",HttpStatus.NOT_FOUND);
+			return new ResponseEntity("User not found",HttpStatus.OK);
 		
 		}
 		}catch(Exception ex) {
@@ -55,7 +55,7 @@ public class UserController {
 		if(emailId!=null) {
 			User userObj =userService.fetchUserByEmailId(emailId);
 			if(userObj!=null) {
-				return new ResponseEntity("Email ID already registered!!", HttpStatus.CONFLICT);
+				return new ResponseEntity("Already Registered", HttpStatus.OK);
 			}
 		}
 		User userObj =null;
@@ -63,7 +63,7 @@ public class UserController {
 			LocalDate curDate=LocalDate.now();
 			long years=Period.between(user.getDob(), curDate).getYears();
 			if(years<18) {
-				return new ResponseEntity("Age Should be greater than 18!!",HttpStatus.EXPECTATION_FAILED);
+				return new ResponseEntity("Age Issue",HttpStatus.OK);
 			}else {
 				user.setAge(years);
 			}
@@ -71,9 +71,9 @@ public class UserController {
 		user.setActivationDate(LocalDate.now());
 		userObj=userService.registerUser(user);
 		if(userObj!=null) {
-		return new ResponseEntity("User Created", HttpStatus.CREATED);
+		return new ResponseEntity("User Created", HttpStatus.OK);
 		}else {
-			return new ResponseEntity("User not created !!", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity("User not created", HttpStatus.OK);
 		}
 		}catch(Exception ex) {
 			return new ResponseEntity("Exception Occurred!!",HttpStatus.INTERNAL_SERVER_ERROR);
