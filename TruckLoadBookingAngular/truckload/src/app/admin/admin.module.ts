@@ -53,7 +53,8 @@ import {MatTableModule} from '@angular/material/table';
     ReactiveFormsModule,
     HttpClientModule,
     MatSnackBarModule,
-    MatTableModule
+    MatTableModule,
+   
   ],
   providers: [{
     provide:MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue:{duration:2500}

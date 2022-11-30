@@ -11,6 +11,7 @@ export class TlbService {
   private userUrl="http://localhost:8090/api/v1/tlb";
   private truckloadUrl="http://localhost:8091/api/v1/tlb";
  url!:any;
+ pickupDate!:string;
   constructor(private _http:HttpClient) { }
 
   public login(user:User){
@@ -44,20 +45,26 @@ export class TlbService {
   }
 
   public searchLoadForAdmin(load:Truckload){
-    if(load.loadId!=null && (load.pickupDate==null || !load.pickupDate ) && (load.pickupLocation==null || !load.pickupLocation)) {
+    if(load.pickupDate!=null && load.pickupDate){
+    let date = new Date(load.pickupDate);
+     let mnth = ("0" + (date.getMonth() + 1)).slice(-2);
+     let day = ("0" + date.getDate()).slice(-2);
+   this.pickupDate = [date.getFullYear(), mnth, day].join("-");
+  }
+    if(load.loadId!=null && (this.pickupDate==null) && (load.pickupLocation==null || !load.pickupLocation)) {
 			this.url=`${this.truckloadUrl}/search?loadId=${load.loadId}`;
-		}else if((load.loadId==null || !load.loadId) && load.pickupDate!=null && (load.pickupLocation==null || !load.pickupLocation)) {
-			this.url=`${this.truckloadUrl}/search?&pickupDate=${load.pickupDate}`;
-		}else if((load.loadId==null || !load.loadId) && (load.pickupDate==null || !load.pickupDate ) && (load.pickupLocation==null || !load.pickupLocation)) {
+		}else if((load.loadId==null || !load.loadId) && this.pickupDate!=null && (load.pickupLocation==null || !load.pickupLocation)) {
+			this.url=`${this.truckloadUrl}/search?&pickupDate=${this.pickupDate}`;
+		}else if((load.loadId==null || !load.loadId) && (this.pickupDate==null) && (load.pickupLocation!=null)) {
 			this.url=`${this.truckloadUrl}/search?pickupLocation=${load.pickupLocation}`;
-		}else if(load.loadId!=null && load.pickupDate!=null && (load.pickupLocation==null || !load.pickupLocation)) {
-			this.url=`${this.truckloadUrl}/search?loadId=${load.loadId}&pickupDate=${load.pickupDate}`;
-		}else if(load.loadId!=null && (load.pickupDate==null || !load.pickupDate ) && load.pickupLocation!=null) {
+		}else if(load.loadId!=null && this.pickupDate!=null && (load.pickupLocation==null || !load.pickupLocation)) {
+			this.url=`${this.truckloadUrl}/search?loadId=${load.loadId}&pickupDate=${this.pickupDate}`;
+		}else if(load.loadId!=null && (this.pickupDate==null ) && load.pickupLocation!=null) {
 			this.url=`${this.truckloadUrl}/search?loadId=${load.loadId}&pickupLocation=${load.pickupLocation}`;
-		}else if((load.loadId==null || !load.loadId) && load.pickupDate!=null && load.pickupLocation!=null) {
-			this.url=`${this.truckloadUrl}/search?pickupDate=${load.pickupDate}&pickupLocation=${load.pickupLocation}`;
-		}else if(load.loadId!=null && load.pickupDate!=null && load.pickupLocation!=null) {
-			this.url=`${this.truckloadUrl}/search?loadId=${load.loadId}&pickupDate=${load.pickupDate}&pickupLocation=${load.pickupLocation}`;
+		}else if((load.loadId==null || !load.loadId) && this.pickupDate!=null && load.pickupLocation!=null) {
+			this.url=`${this.truckloadUrl}/search?pickupDate=${this.pickupDate}&pickupLocation=${load.pickupLocation}`;
+		}else if(load.loadId!=null && this.pickupDate!=null && load.pickupLocation!=null) {
+			this.url=`${this.truckloadUrl}/search?loadId=${load.loadId}&pickupDate=${this.pickupDate}&pickupLocation=${load.pickupLocation}`;
 		}
     console.log(this.url)
     return this._http.get<any>(this.url);
@@ -111,20 +118,28 @@ export class TlbService {
   }
 
   public searchLoadForDriver(load:Truckload){
-    if(load.loadId!=null && (load.pickupDate==null || !load.pickupDate ) && (load.pickupLocation==null || !load.pickupLocation)) {
+    
+    if(load.pickupDate!=null && load.pickupDate){
+      console.log("*");
+    let date = new Date(load.pickupDate);
+     let mnth = ("0" + (date.getMonth() + 1)).slice(-2);
+     let day = ("0" + date.getDate()).slice(-2);
+   this.pickupDate= [date.getFullYear(), mnth, day].join("-");
+    }
+    if(load.loadId!=null && (this.pickupDate==null) && (load.pickupLocation==null || !load.pickupLocation)) {
 			this.url=`${this.truckloadUrl}/search/driver?loadId=${load.loadId}`;
-		}else if((load.loadId==null || !load.loadId) && load.pickupDate!=null && (load.pickupLocation==null || !load.pickupLocation)) {
-			this.url=`${this.truckloadUrl}/search/driver?&pickupDate=${load.pickupDate}`;
-		}else if((load.loadId==null || !load.loadId) && (load.pickupDate==null || !load.pickupDate ) && (load.pickupLocation==null || !load.pickupLocation)) {
+		}else if((load.loadId==null || !load.loadId) && this.pickupDate!=null && (load.pickupLocation==null || !load.pickupLocation)) {
+			this.url=`${this.truckloadUrl}/search/driver?&pickupDate=${this.pickupDate}`;
+		}else if((load.loadId==null || !load.loadId) && (this.pickupDate==null) && (load.pickupLocation!=null)) {
 			this.url=`${this.truckloadUrl}/search/driver?pickupLocation=${load.pickupLocation}`;
 		}else if(load.loadId!=null && load.pickupDate!=null && (load.pickupLocation==null || !load.pickupLocation)) {
-			this.url=`${this.truckloadUrl}/search/driver?loadId=${load.loadId}&pickupDate=${load.pickupDate}`;
-		}else if(load.loadId!=null && (load.pickupDate==null || !load.pickupDate ) && load.pickupLocation!=null) {
+			this.url=`${this.truckloadUrl}/search/driver?loadId=${load.loadId}&pickupDate=${this.pickupDate}`;
+		}else if(load.loadId!=null && (this.pickupDate==null) && load.pickupLocation!=null) {
 			this.url=`${this.truckloadUrl}/search/driver?loadId=${load.loadId}&pickupLocation=${load.pickupLocation}`;
-		}else if((load.loadId==null || !load.loadId) && load.pickupDate!=null && load.pickupLocation!=null) {
-			this.url=`${this.truckloadUrl}/search/driver?pickupDate=${load.pickupDate}&pickupLocation=${load.pickupLocation}`;
-		}else if(load.loadId!=null && load.pickupDate!=null && load.pickupLocation!=null) {
-			this.url=`${this.truckloadUrl}/search/driver?loadId=${load.loadId}&pickupDate=${load.pickupDate}&pickupLocation=${load.pickupLocation}`;
+		}else if((load.loadId==null || !load.loadId) && this.pickupDate!=null && load.pickupLocation!=null) {
+			this.url=`${this.truckloadUrl}/search/driver?pickupDate=${this.pickupDate}&pickupLocation=${load.pickupLocation}`;
+		}else if(load.loadId!=null && this.pickupDate!=null && load.pickupLocation!=null) {
+			this.url=`${this.truckloadUrl}/search/driver?loadId=${load.loadId}&pickupDate=${this.pickupDate}&pickupLocation=${load.pickupLocation}`;
 		}
     console.log(this.url)
     return this._http.get<any>(this.url);
