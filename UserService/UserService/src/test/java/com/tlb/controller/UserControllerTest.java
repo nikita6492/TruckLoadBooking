@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
@@ -65,7 +66,7 @@ public class UserControllerTest {
 	
 	@Test
 	public void testRegisterUser() throws Exception {
-		User user = new User("MS-001", "Mark", "Smith", "Test12345@", "test@gmail.com", LocalDate.now(), 
+		User user = new User("MS-001", "Mark", "Smith", "Test12345@", "test@gmail.com", new Date(0), 
 				"Admin", "1234567896", "ABCDEFGHT123", LocalDate.now(), 22L, "Australia", "New South Wales", "Sydney");
 		MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
@@ -79,7 +80,7 @@ public class UserControllerTest {
 
 	@Test
 	public void testfetchUserByEmailId() throws Exception {
-		User user = new User("MS-001", "Mark", "Smith", "Test12345@", "test@gmail.com", LocalDate.now(), 
+		User user = new User("MS-001", "Mark", "Smith", "Test12345@", "test@gmail.com", new Date(0), 
 				"Admin", "1234567896", "ABCDEFGHT123", LocalDate.now(), 22L, "Australia", "New South Wales", "Sydney");
 		MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));

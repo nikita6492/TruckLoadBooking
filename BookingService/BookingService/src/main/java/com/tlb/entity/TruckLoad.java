@@ -1,6 +1,8 @@
 package com.tlb.entity;
 
+import java.sql.Date;
 import java.time.LocalDate;
+
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,12 +35,12 @@ public class TruckLoad {
 			@Parameter(name=LoadSequenceIdGenerator.INCREMENT_PARAM, value="5")})
 	private String loadId;
 	private String itemType;
-	private LocalDate pickupDate;
+	private Date pickupDate;
 	private String pickupLocation;
-	private LocalDate dropDate;
+	private Date dropDate;
 	private String dropLocation;
 	private String bookingStatus;
-	private LocalDate bookingDate;
+	private Date bookingDate;
 	private String driverId;
 }
 

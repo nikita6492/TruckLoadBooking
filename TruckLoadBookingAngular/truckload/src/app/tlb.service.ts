@@ -8,8 +8,8 @@ import { User } from './user';
 })
 export class TlbService {
 
-  private userUrl="http://localhost:8090/api/v1/tlb";
-  private truckloadUrl="http://localhost:8091/api/v1/tlb";
+  private userUrl="http://ec2-43-206-111-226.ap-northeast-1.compute.amazonaws.com:8090/api/v1/tlb";
+  private truckloadUrl="http://ec2-35-76-112-141.ap-northeast-1.compute.amazonaws.com:8091/api/v1/tlb";
  url!:any;
  pickupDate!:string;
   constructor(private _http:HttpClient) { }
@@ -40,6 +40,7 @@ export class TlbService {
   }
 
   public createLoad(load:Truckload){
+    console.log(load);
     let resp=this._http.post(`${this.truckloadUrl}/createLoad`,load,{responseType: 'text' as 'json'});
     return resp;
   }
@@ -54,7 +55,7 @@ export class TlbService {
     if(load.loadId!=null && (this.pickupDate==null) && (load.pickupLocation==null || !load.pickupLocation)) {
 			this.url=`${this.truckloadUrl}/search?loadId=${load.loadId}`;
 		}else if((load.loadId==null || !load.loadId) && this.pickupDate!=null && (load.pickupLocation==null || !load.pickupLocation)) {
-			this.url=`${this.truckloadUrl}/search?&pickupDate=${this.pickupDate}`;
+			this.url=`${this.truckloadUrl}/search?pickupDate=${this.pickupDate}`;
 		}else if((load.loadId==null || !load.loadId) && (this.pickupDate==null) && (load.pickupLocation!=null)) {
 			this.url=`${this.truckloadUrl}/search?pickupLocation=${load.pickupLocation}`;
 		}else if(load.loadId!=null && this.pickupDate!=null && (load.pickupLocation==null || !load.pickupLocation)) {
@@ -83,37 +84,37 @@ export class TlbService {
 
   public bookLoad(loadId:number){
     let user_email = sessionStorage.getItem("user_email");
-    let resp=this._http.post(`${this.truckloadUrl}/bookLoad/${loadId}/${user_email}`,{responseType: 'text' as 'json'});
+    let resp=this._http.post(`${this.truckloadUrl}/bookLoad/${loadId}?email=${user_email}`,{responseType: 'text' as 'json'});
     return resp;
   }
 
   public intransitLoad(loadId:number){
     let user_email = sessionStorage.getItem("user_email");
-    let resp=this._http.post(`${this.truckloadUrl}/intransitLoad/${loadId}/${user_email}`,{responseType: 'text' as 'json'});
+    let resp=this._http.post(`${this.truckloadUrl}/intransitLoad/${loadId}?email=${user_email}`,{responseType: 'text' as 'json'});
     return resp;
   }
 
   public completeLoad(loadId:number){
     let user_email = sessionStorage.getItem("user_email");
-    let resp=this._http.post(`${this.truckloadUrl}/completeLoad/${loadId}/${user_email}`,{responseType: 'text' as 'json'});
+    let resp=this._http.post(`${this.truckloadUrl}/completeLoad/${loadId}?email=${user_email}`,{responseType: 'text' as 'json'});
     return resp;
   }
 
   public viewBookedLoad(){
     let user_email = sessionStorage.getItem("user_email");
-    let resp = this._http.get(`${this.truckloadUrl}/viewBookedLoads/${user_email}`);
+    let resp = this._http.get(`${this.truckloadUrl}/viewBookedLoads?email=${user_email}`);
     return resp;
   }
 
   public viewIntransitLoad(){
     let user_email = sessionStorage.getItem("user_email");
-    let resp = this._http.get(`${this.truckloadUrl}/viewInTransitLoads/${user_email}`);
+    let resp = this._http.get(`${this.truckloadUrl}/viewInTransitLoads?email=${user_email}`);
     return resp;
   }
 
   public viewCompletedLoad(){
     let user_email = sessionStorage.getItem("user_email");
-    let resp = this._http.get(`${this.truckloadUrl}/viewCompletedLoads/${user_email}`);
+    let resp = this._http.get(`${this.truckloadUrl}/viewCompletedLoads?email=${user_email}`);
     return resp;
   }
 
@@ -129,7 +130,7 @@ export class TlbService {
     if(load.loadId!=null && (this.pickupDate==null) && (load.pickupLocation==null || !load.pickupLocation)) {
 			this.url=`${this.truckloadUrl}/search/driver?loadId=${load.loadId}`;
 		}else if((load.loadId==null || !load.loadId) && this.pickupDate!=null && (load.pickupLocation==null || !load.pickupLocation)) {
-			this.url=`${this.truckloadUrl}/search/driver?&pickupDate=${this.pickupDate}`;
+			this.url=`${this.truckloadUrl}/search/driver?pickupDate=${this.pickupDate}`;
 		}else if((load.loadId==null || !load.loadId) && (this.pickupDate==null) && (load.pickupLocation!=null)) {
 			this.url=`${this.truckloadUrl}/search/driver?pickupLocation=${load.pickupLocation}`;
 		}else if(load.loadId!=null && load.pickupDate!=null && (load.pickupLocation==null || !load.pickupLocation)) {

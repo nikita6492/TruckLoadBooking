@@ -12,11 +12,12 @@ import { Truckload } from 'src/app/truckload';
 })
 export class CreateLoadComponent implements OnInit {
 loadForm!:FormGroup;
-  minDate=new Date();
+minDate=new Date();
   truckLoad=new Truckload();
   constructor(private service:TlbService,private formBuilder:FormBuilder, private snackbar:MatSnackBar, private route:Router) { }
 
   ngOnInit(): void {
+   console.log(this.minDate);
     this.loadForm=this.formBuilder.group({
       pickupDate: ['', Validators.required],
       pickupLocation: ['', Validators.required],
@@ -33,6 +34,7 @@ loadForm!:FormGroup;
     this.truckLoad.pickupDate=this.loadForm.controls['pickupDate'].value;
     this.truckLoad.pickupLocation=this.loadForm.controls['pickupLocation'].value;
     this.truckLoad.dropDate=this.loadForm.controls['dropDate'].value;
+    console.log(this.truckLoad.dropDate);
     this.truckLoad.dropLocation=this.loadForm.controls['dropLocation'].value;
     this.truckLoad.itemType=this.loadForm.controls['itemType'].value;
     this.truckLoad.bookingDate=this.loadForm.controls['bookingDate'].value;

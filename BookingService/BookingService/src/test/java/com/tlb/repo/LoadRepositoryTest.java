@@ -2,7 +2,7 @@ package com.tlb.repo;
 
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,8 +28,8 @@ public class LoadRepositoryTest {
 	
 	@Test
 	public void testfindByLoadId() {
-		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", LocalDate.now(), "Pune", LocalDate.now(), "Mumbai", 
-				"Booked", LocalDate.now(), "MS-0001");
+		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", new Date(0), "Pune", new Date(0), "Mumbai", 
+				"Booked", new Date(0), "MS-0001");
 		
 		//loadRespository.save(truckLoad);
 		List<TruckLoad> list =new ArrayList<>();
@@ -41,8 +41,8 @@ public class LoadRepositoryTest {
 	
 	@Test
 	public void testFindByPickupLocation() {
-		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", LocalDate.now(), "Pune", LocalDate.now(), "Mumbai", 
-				"Booked", LocalDate.now(), "MS-0001");
+		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", new Date(0), "Pune", new Date(0), "Mumbai", 
+				"Booked", new Date(0), "MS-0001");
 		
 		List<TruckLoad> list =new ArrayList<>();
 		list.add(truckLoad);
@@ -53,20 +53,20 @@ public class LoadRepositoryTest {
 	
 	@Test
 	public void testFindByPickupDate() {
-		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", LocalDate.now(), "Pune", LocalDate.now(), "Mumbai", 
-				"Booked", LocalDate.now(), "MS-0001");
+		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", new Date(0), "Pune", new Date(0), "Mumbai", 
+				"Booked", new Date(0), "MS-0001");
 		
 		List<TruckLoad> list =new ArrayList<>();
 		list.add(truckLoad);
-		when(loadRespository.findByPickupDate(LocalDate.now())).thenReturn(list);
-		List<TruckLoad> tlb =loadRespository.findByPickupDate(LocalDate.now());
+		when(loadRespository.findByPickupDate(new Date(0))).thenReturn(list);
+		List<TruckLoad> tlb =loadRespository.findByPickupDate(new Date(0));
 		Assertions.assertTrue(!tlb.isEmpty());
 	}
 
 	@Test
 	public void testfindByLoadIdAndPickupLocation() {
-		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", LocalDate.now(), "Pune", LocalDate.now(), "Mumbai", 
-				"Booked", LocalDate.now(), "MS-0001");
+		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", new Date(0), "Pune", new Date(0), "Mumbai", 
+				"Booked", new Date(0), "MS-0001");
 		
 		List<TruckLoad> list =new ArrayList<>();
 		list.add(truckLoad);
@@ -78,81 +78,81 @@ public class LoadRepositoryTest {
 
 	@Test
 	public void testfindByLoadIdAndPickupDate() {
-		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", LocalDate.now(), "Pune", LocalDate.now(), "Mumbai", 
-				"Booked", LocalDate.now(), "MS-0001");
+		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", new Date(0), "Pune", new Date(0), "Mumbai", 
+				"Booked", new Date(0), "MS-0001");
 		
 		List<TruckLoad> list =new ArrayList<>();
 		list.add(truckLoad);
-		when(loadRespository.findByLoadIdAndPickupDate("LD-00001",LocalDate.now())).thenReturn(list);
-		List<TruckLoad> tlb =loadRespository.findByLoadIdAndPickupDate("LD-00001",LocalDate.now());
+		when(loadRespository.findByLoadIdAndPickupDate("LD-00001",new Date(0))).thenReturn(list);
+		List<TruckLoad> tlb =loadRespository.findByLoadIdAndPickupDate("LD-00001",new Date(0));
 		Assertions.assertTrue(!tlb.isEmpty());
 	}
 	
 
 	@Test
 	public void testfindByPickupLocationAndPickupDate() {
-		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", LocalDate.now(), "Pune", LocalDate.now(), "Mumbai", 
-				"Booked", LocalDate.now(), "MS-0001");
+		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", new Date(0), "Pune", new Date(0), "Mumbai", 
+				"Booked", new Date(0), "MS-0001");
 		
 		List<TruckLoad> list =new ArrayList<>();
 		list.add(truckLoad);
-		when(loadRespository.findByPickupLocationAndPickupDate("Pune",LocalDate.now())).thenReturn(list);
-		List<TruckLoad> tlb =loadRespository.findByPickupLocationAndPickupDate("Pune",LocalDate.now());
+		when(loadRespository.findByPickupLocationAndPickupDate("Pune",new Date(0))).thenReturn(list);
+		List<TruckLoad> tlb =loadRespository.findByPickupLocationAndPickupDate("Pune",new Date(0));
 		Assertions.assertTrue(!tlb.isEmpty());
 	}
 
 	@Test
 	public void testfindByLoadIdAndPickupLocationAndPickupDate() {
-		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", LocalDate.now(), "Pune", LocalDate.now(), "Mumbai", 
-				"Booked", LocalDate.now(), "MS-0001");
+		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", new Date(0), "Pune", new Date(0), "Mumbai", 
+				"Booked", new Date(0), "MS-0001");
 		
 		List<TruckLoad> list =new ArrayList<>();
 		list.add(truckLoad);
-		when(loadRespository.findByLoadIdAndPickupLocationAndPickupDate("LD-00001","Pune",LocalDate.now())).thenReturn(list);
-		List<TruckLoad> tlb =loadRespository.findByLoadIdAndPickupLocationAndPickupDate("LD-00001","Pune",LocalDate.now());
+		when(loadRespository.findByLoadIdAndPickupLocationAndPickupDate("LD-00001","Pune",new Date(0))).thenReturn(list);
+		List<TruckLoad> tlb =loadRespository.findByLoadIdAndPickupLocationAndPickupDate("LD-00001","Pune",new Date(0));
 		Assertions.assertTrue(!tlb.isEmpty());
 	}
 	
 	@Test
 	public void testfindByLoadIdAndPickupLocationAndPickupDateAndBookingStatus() {
-		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", LocalDate.now(), "Pune", LocalDate.now(), "Mumbai", 
-				"Booked", LocalDate.now(), "MS-0001");
+		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", new Date(0), "Pune", new Date(0), "Mumbai", 
+				"Booked", new Date(0), "MS-0001");
 		
 		List<TruckLoad> list =new ArrayList<>();
 		list.add(truckLoad);
-		when(loadRespository.findByLoadIdAndPickupLocationAndPickupDateAndBookingStatus("LD-00001","Pune",LocalDate.now(),"Booked")).thenReturn(list);
-		List<TruckLoad> tlb =loadRespository.findByLoadIdAndPickupLocationAndPickupDateAndBookingStatus("LD-00001","Pune",LocalDate.now(),"Booked");
+		when(loadRespository.findByLoadIdAndPickupLocationAndPickupDateAndBookingStatus("LD-00001","Pune",new Date(0),"Booked")).thenReturn(list);
+		List<TruckLoad> tlb =loadRespository.findByLoadIdAndPickupLocationAndPickupDateAndBookingStatus("LD-00001","Pune",new Date(0),"Booked");
 		Assertions.assertTrue(!tlb.isEmpty());
 	}
 	
 	@Test
 	public void testfindByPickupLocationAndPickupDateAndBookingStatus() {
-		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", LocalDate.now(), "Pune", LocalDate.now(), "Mumbai", 
-				"Booked", LocalDate.now(), "MS-0001");
+		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", new Date(0), "Pune", new Date(0), "Mumbai", 
+				"Booked", new Date(0), "MS-0001");
 		
 		List<TruckLoad> list =new ArrayList<>();
 		list.add(truckLoad);
-		when(loadRespository.findByPickupLocationAndPickupDateAndBookingStatus("Pune",LocalDate.now(),"Booked")).thenReturn(list);
-		List<TruckLoad> tlb =loadRespository.findByPickupLocationAndPickupDateAndBookingStatus("Pune",LocalDate.now(),"Booked");
+		when(loadRespository.findByPickupLocationAndPickupDateAndBookingStatus("Pune",new Date(0),"Booked")).thenReturn(list);
+		List<TruckLoad> tlb =loadRespository.findByPickupLocationAndPickupDateAndBookingStatus("Pune",new Date(0),"Booked");
 		Assertions.assertTrue(!tlb.isEmpty());
 	}
 
 	@Test
 	public void testfindByLoadIdAndPickupDateAndBookingStatus() {
-		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", LocalDate.now(), "Pune", LocalDate.now(), "Mumbai", 
-				"Booked", LocalDate.now(), "MS-0001");
+		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", new Date(0), "Pune", new Date(0), "Mumbai", 
+				"Booked", new Date(0), "MS-0001");
 		
 		List<TruckLoad> list =new ArrayList<>();
 		list.add(truckLoad);
-		when(loadRespository.findByLoadIdAndPickupDateAndBookingStatus("LD-00001",LocalDate.now(),"Booked")).thenReturn(list);
-		List<TruckLoad> tlb =loadRespository.findByLoadIdAndPickupDateAndBookingStatus("LD-00001",LocalDate.now(),"Booked");
+		when(loadRespository.findByLoadIdAndPickupDateAndBookingStatus("LD-00001",new Date(0),"Booked")).thenReturn(list);
+		List<TruckLoad> tlb =loadRespository.findByLoadIdAndPickupDateAndBookingStatus("LD-00001",new Date(0),"Booked");
 		Assertions.assertTrue(!tlb.isEmpty());
 	}
 	
 	@Test
 	public void testfindByLoadIdAndPickupLocationAndBookingStatus() {
-		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", LocalDate.now(), "Pune", LocalDate.now(), "Mumbai", 
-				"Booked", LocalDate.now(), "MS-0001");
+		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", new Date(0), "Pune", new Date(0), "Mumbai", 
+				"Booked", new Date(0), "MS-0001");
 		
 		List<TruckLoad> list =new ArrayList<>();
 		list.add(truckLoad);
@@ -164,20 +164,20 @@ public class LoadRepositoryTest {
 
 	@Test
 	public void testfindByPickupDateAndBookingStatus() {
-		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", LocalDate.now(), "Pune", LocalDate.now(), "Mumbai", 
-				"Booked", LocalDate.now(), "MS-0001");
+		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", new Date(0), "Pune", new Date(0), "Mumbai", 
+				"Booked", new Date(0), "MS-0001");
 		
 		List<TruckLoad> list =new ArrayList<>();
 		list.add(truckLoad);
-		when(loadRespository.findByPickupDateAndBookingStatus(LocalDate.now(),"Booked")).thenReturn(list);
-		List<TruckLoad> tlb =loadRespository.findByPickupDateAndBookingStatus(LocalDate.now(),"Booked");
+		when(loadRespository.findByPickupDateAndBookingStatus(new Date(0),"Booked")).thenReturn(list);
+		List<TruckLoad> tlb =loadRespository.findByPickupDateAndBookingStatus(new Date(0),"Booked");
 		Assertions.assertTrue(!tlb.isEmpty());
 	}
 
 	@Test
 	public void testfindByPickupLocationAndBookingStatus() {
-		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", LocalDate.now(), "Pune", LocalDate.now(), "Mumbai", 
-				"Booked", LocalDate.now(), "MS-0001");
+		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", new Date(0), "Pune", new Date(0), "Mumbai", 
+				"Booked", new Date(0), "MS-0001");
 		
 		List<TruckLoad> list =new ArrayList<>();
 		list.add(truckLoad);
@@ -188,8 +188,8 @@ public class LoadRepositoryTest {
 
 	@Test
 	public void testfindByLoadIdAndBookingStatus() {
-		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", LocalDate.now(), "Pune", LocalDate.now(), "Mumbai", 
-				"Booked", LocalDate.now(), "MS-0001");
+		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", new Date(0), "Pune", new Date(0), "Mumbai", 
+				"Booked", new Date(0), "MS-0001");
 		
 		List<TruckLoad> list =new ArrayList<>();
 		list.add(truckLoad);
@@ -200,8 +200,8 @@ public class LoadRepositoryTest {
 	
 	@Test
 	public void testfindByDriverIdAndBookingStatus() {
-		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", LocalDate.now(), "Pune", LocalDate.now(), "Mumbai", 
-				"Booked", LocalDate.now(), "MS-0001");
+		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", new Date(0), "Pune", new Date(0), "Mumbai", 
+				"Booked", new Date(0), "MS-0001");
 		
 		List<TruckLoad> list =new ArrayList<>();
 		list.add(truckLoad);

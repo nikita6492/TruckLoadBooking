@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 
 import org.hamcrest.Matchers;
@@ -48,8 +49,8 @@ public class LoadControllerTest {
 	
 	@Test
 	public void testCreateLoad() throws Exception {
-		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", LocalDate.now(), "Pune", LocalDate.now(), "Mumbai", 
-				"Booked", LocalDate.now(), "MS-0001");
+		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", new Date(0), "Pune", new Date(0), "Mumbai", 
+				"Booked", new Date(0), "MS-0001");
 		
 		MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
@@ -63,8 +64,8 @@ public class LoadControllerTest {
 
 	@Test
 	public void testCancelLoad() throws Exception {
-		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", LocalDate.now(), "Pune", LocalDate.now(), "Mumbai", 
-				"Cancelled", LocalDate.now(), "MS-0001");
+		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", new Date(0), "Pune", new Date(0), "Mumbai", 
+				"Cancelled", new Date(0), "MS-0001");
 		
 		MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
@@ -78,14 +79,14 @@ public class LoadControllerTest {
 	
 	@Test
 	public void testBookLoad() throws Exception {
-		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", LocalDate.now(), "Pune", LocalDate.now(), "Mumbai", 
-				"Booked", LocalDate.now(), "MS-0001");
-		User user = new User("MS-001", "Mark", "Smith", "Test12345@", "test@gmail.com", LocalDate.now(), 
+		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", new Date(0), "Pune", new Date(0), "Mumbai", 
+				"Booked", new Date(0), "MS-0001");
+		User user = new User("MS-001", "Mark", "Smith", "Test12345@", "test@gmail.com", new Date(0), 
 				"Admin", "1234567896", "ABCDEFGHT123", LocalDate.now(), 22L, "Australia", "New South Wales", "Sydney");
 		ResponseEntity<User> entity=new ResponseEntity<User>(user,HttpStatus.OK);
 		ParameterizedTypeReference<User> typeRef = new ParameterizedTypeReference<User>() {
 		};
-        Mockito.when(restTemplate.exchange("http://localhost:8090/api/v1/tlb/fetchDriverId/test@gmail.com", HttpMethod.GET, null, typeRef)).thenReturn(entity);
+        Mockito.when(restTemplate.exchange("http://localhost:8090/api/v1/tlb/fetchDriverId?email=test@gmail.com", HttpMethod.GET, null, typeRef)).thenReturn(entity);
 		MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
         
@@ -98,14 +99,14 @@ public class LoadControllerTest {
 	
 	@Test
 	public void testInTransit() throws Exception {
-		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", LocalDate.now(), "Pune", LocalDate.now(), "Mumbai", 
-				"InTransit", LocalDate.now(), "MS-0001");
-		User user = new User("MS-001", "Mark", "Smith", "Test12345@", "test@gmail.com", LocalDate.now(), 
+		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", new Date(0), "Pune", new Date(0), "Mumbai", 
+				"InTransit",new Date(0), "MS-0001");
+		User user = new User("MS-001", "Mark", "Smith", "Test12345@", "test@gmail.com", new Date(0), 
 				"Admin", "1234567896", "ABCDEFGHT123", LocalDate.now(), 22L, "Australia", "New South Wales", "Sydney");
 		ResponseEntity<User> entity=new ResponseEntity<User>(user,HttpStatus.OK);
 		ParameterizedTypeReference<User> typeRef = new ParameterizedTypeReference<User>() {
 		};
-        Mockito.when(restTemplate.exchange("http://localhost:8090/api/v1/tlb/fetchDriverId/test@gmail.com", HttpMethod.GET, null, typeRef)).thenReturn(entity);
+        Mockito.when(restTemplate.exchange("http://localhost:8090/api/v1/tlb/fetchDriverId?email=test@gmail.com", HttpMethod.GET, null, typeRef)).thenReturn(entity);
 		MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
         
@@ -118,14 +119,14 @@ public class LoadControllerTest {
 	
 	@Test
 	public void testCompleteLoad() throws Exception {
-		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", LocalDate.now(), "Pune", LocalDate.now(), "Mumbai", 
-				"Completed", LocalDate.now(), "MS-0001");
-		User user = new User("MS-001", "Mark", "Smith", "Test12345@", "test@gmail.com", LocalDate.now(), 
+		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", new Date(0), "Pune", new Date(0), "Mumbai", 
+				"Completed", new Date(0), "MS-0001");
+		User user = new User("MS-001", "Mark", "Smith", "Test12345@", "test@gmail.com", new Date(0), 
 				"Admin", "1234567896", "ABCDEFGHT123", LocalDate.now(), 22L, "Australia", "New South Wales", "Sydney");
 		ResponseEntity<User> entity=new ResponseEntity<User>(user,HttpStatus.OK);
 		ParameterizedTypeReference<User> typeRef = new ParameterizedTypeReference<User>() {
 		};
-        Mockito.when(restTemplate.exchange("http://localhost:8090/api/v1/tlb/fetchDriverId/test@gmail.com", HttpMethod.GET, null, typeRef)).thenReturn(entity);
+        Mockito.when(restTemplate.exchange("http://localhost:8090/api/v1/tlb/fetchDriverId?email=test@gmail.com", HttpMethod.GET, null, typeRef)).thenReturn(entity);
 		MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
         
@@ -138,19 +139,19 @@ public class LoadControllerTest {
 	
 	@Test
 	public void testViewBookedLoads() throws Exception {
-		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", LocalDate.now(), "Pune", LocalDate.now(), "Mumbai", 
-				"Booked", LocalDate.now(), "MS-0001");
-		TruckLoad truckLoad1 = new TruckLoad("LD-00002", "TV", LocalDate.now(), "Pune", LocalDate.now(), "Mumbai", 
-				"Booked", LocalDate.now(), "MS-0001");
+		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", new Date(0), "Pune", new Date(0), "Mumbai", 
+				"Booked", new Date(0), "MS-0001");
+		TruckLoad truckLoad1 = new TruckLoad("LD-00002", "TV", new Date(0), "Pune", new Date(0), "Mumbai", 
+				"Booked", new Date(0), "MS-0001");
 		List<TruckLoad> list=new ArrayList<TruckLoad>();
 		list.add(truckLoad);
 		list.add(truckLoad1);
-		User user = new User("MS-001", "Mark", "Smith", "Test12345@", "test@gmail.com", LocalDate.now(), 
+		User user = new User("MS-001", "Mark", "Smith", "Test12345@", "test@gmail.com", new Date(0), 
 				"Admin", "1234567896", "ABCDEFGHT123", LocalDate.now(), 22L, "Australia", "New South Wales", "Sydney");
 		ResponseEntity<User> entity=new ResponseEntity<User>(user,HttpStatus.OK);
 		ParameterizedTypeReference<User> typeRef = new ParameterizedTypeReference<User>() {
 		};
-        Mockito.when(restTemplate.exchange("http://localhost:8090/api/v1/tlb/fetchDriverId/test@gmail.com", HttpMethod.GET, null, typeRef)).thenReturn(entity);
+        Mockito.when(restTemplate.exchange("http://localhost:8090/api/v1/tlb/fetchDriverId?email=test@gmail.com", HttpMethod.GET, null, typeRef)).thenReturn(entity);
 		MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
         
@@ -164,19 +165,19 @@ public class LoadControllerTest {
 	
 	@Test
 	public void testViewInTransitLoads() throws Exception {
-		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", LocalDate.now(), "Pune", LocalDate.now(), "Mumbai", 
-				"InTransit", LocalDate.now(), "MS-0001");
-		TruckLoad truckLoad1 = new TruckLoad("LD-00002", "TV", LocalDate.now(), "Pune", LocalDate.now(), "Mumbai", 
-				"InTransit", LocalDate.now(), "MS-0001");
+		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", new Date(0), "Pune", new Date(0), "Mumbai", 
+				"InTransit", new Date(0), "MS-0001");
+		TruckLoad truckLoad1 = new TruckLoad("LD-00002", "TV", new Date(0), "Pune", new Date(0), "Mumbai", 
+				"InTransit", new Date(0), "MS-0001");
 		List<TruckLoad> list=new ArrayList<TruckLoad>();
 		list.add(truckLoad);
 		list.add(truckLoad1);
-		User user = new User("MS-001", "Mark", "Smith", "Test12345@", "test@gmail.com", LocalDate.now(), 
+		User user = new User("MS-001", "Mark", "Smith", "Test12345@", "test@gmail.com", new Date(0), 
 				"Admin", "1234567896", "ABCDEFGHT123", LocalDate.now(), 22L, "Australia", "New South Wales", "Sydney");
 		ResponseEntity<User> entity=new ResponseEntity<User>(user,HttpStatus.OK);
 		ParameterizedTypeReference<User> typeRef = new ParameterizedTypeReference<User>() {
 		};
-        Mockito.when(restTemplate.exchange("http://localhost:8090/api/v1/tlb/fetchDriverId/test@gmail.com", HttpMethod.GET, null, typeRef)).thenReturn(entity);
+        Mockito.when(restTemplate.exchange("http://localhost:8090/api/v1/tlb/fetchDriverId?email=test@gmail.com", HttpMethod.GET, null, typeRef)).thenReturn(entity);
 		MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
         
@@ -189,19 +190,19 @@ public class LoadControllerTest {
 	
 	@Test
 	public void testViewCompletedLoads() throws Exception {
-		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", LocalDate.now(), "Pune", LocalDate.now(), "Mumbai", 
-				"Completed", LocalDate.now(), "MS-0001");
-		TruckLoad truckLoad1 = new TruckLoad("LD-00002", "TV", LocalDate.now(), "Pune", LocalDate.now(), "Mumbai", 
-				"Completed", LocalDate.now(), "MS-0001");
+		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", new Date(0), "Pune", new Date(0), "Mumbai", 
+				"Completed", new Date(0), "MS-0001");
+		TruckLoad truckLoad1 = new TruckLoad("LD-00002", "TV", new Date(0), "Pune", new Date(0), "Mumbai", 
+				"Completed", new Date(0), "MS-0001");
 		List<TruckLoad> list=new ArrayList<TruckLoad>();
 		list.add(truckLoad);
 		list.add(truckLoad1);
-		User user = new User("MS-001", "Mark", "Smith", "Test12345@", "test@gmail.com", LocalDate.now(), 
+		User user = new User("MS-001", "Mark", "Smith", "Test12345@", "test@gmail.com", new Date(0), 
 				"Admin", "1234567896", "ABCDEFGHT123", LocalDate.now(), 22L, "Australia", "New South Wales", "Sydney");
 		ResponseEntity<User> entity=new ResponseEntity<User>(user,HttpStatus.OK);
 		ParameterizedTypeReference<User> typeRef = new ParameterizedTypeReference<User>() {
 		};
-        Mockito.when(restTemplate.exchange("http://localhost:8090/api/v1/tlb/fetchDriverId/test@gmail.com", HttpMethod.GET, null, typeRef)).thenReturn(entity);
+        Mockito.when(restTemplate.exchange("http://localhost:8090/api/v1/tlb/fetchDriverId?email=test@gmail.com", HttpMethod.GET, null, typeRef)).thenReturn(entity);
 		MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
         
@@ -214,19 +215,19 @@ public class LoadControllerTest {
 	
 	@Test
 	public void testViewAllLoads() throws Exception {
-		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", LocalDate.now(), "Pune", LocalDate.now(), "Mumbai", 
-				"Booked", LocalDate.now(), "MS-0001");
-		TruckLoad truckLoad1 = new TruckLoad("LD-00002", "TV", LocalDate.now(), "Pune", LocalDate.now(), "Mumbai", 
-				"Booked", LocalDate.now(), "MS-0001");
+		TruckLoad truckLoad = new TruckLoad("LD-00001", "Fridge", new Date(0), "Pune", new Date(0), "Mumbai", 
+				"Booked", new Date(0), "MS-0001");
+		TruckLoad truckLoad1 = new TruckLoad("LD-00002", "TV", new Date(0), "Pune", new Date(0), "Mumbai", 
+				"Booked", new Date(0), "MS-0001");
 		List<TruckLoad> list=new ArrayList<TruckLoad>();
 		list.add(truckLoad);
 		list.add(truckLoad1);
-		User user = new User("MS-001", "Mark", "Smith", "Test12345@", "test@gmail.com", LocalDate.now(), 
+		User user = new User("MS-001", "Mark", "Smith", "Test12345@", "test@gmail.com", new Date(0), 
 				"Admin", "1234567896", "ABCDEFGHT123", LocalDate.now(), 22L, "Australia", "New South Wales", "Sydney");
 		ResponseEntity<User> entity=new ResponseEntity<User>(user,HttpStatus.OK);
 		ParameterizedTypeReference<User> typeRef = new ParameterizedTypeReference<User>() {
 		};
-        Mockito.when(restTemplate.exchange("http://localhost:8090/api/v1/tlb/fetchDriverId/test@gmail.com", HttpMethod.GET, null, typeRef)).thenReturn(entity);
+        Mockito.when(restTemplate.exchange("http://localhost:8090/api/v1/tlb/fetchDriverId?email=test@gmail.com", HttpMethod.GET, null, typeRef)).thenReturn(entity);
 		MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
         

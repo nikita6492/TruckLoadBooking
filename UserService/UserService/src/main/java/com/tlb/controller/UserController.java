@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tlb.entity.User;
@@ -61,7 +62,7 @@ public class UserController {
 		User userObj =null;
 		if(user.getDob()!=null){
 			LocalDate curDate=LocalDate.now();
-			long years=Period.between(user.getDob(), curDate).getYears();
+			long years=Period.between(user.getDob().toLocalDate(), curDate).getYears();
 			if(years<18) {
 				return new ResponseEntity("Age Issue",HttpStatus.OK);
 			}else {
@@ -80,8 +81,8 @@ public class UserController {
 		}
 	}
 
-	@GetMapping("/api/v1/tlb/fetchDriverId/{email}")
-	public User fetchUserByEmail(@PathVariable("email") String email) throws Exception {
+	@GetMapping("/api/v1/tlb/fetchDriverId")
+	public User fetchUserByEmail(@RequestParam(name ="email") String email) throws Exception {
 		try {
 		User userObj =userService.fetchUserByEmailId(email);
 		return userObj;

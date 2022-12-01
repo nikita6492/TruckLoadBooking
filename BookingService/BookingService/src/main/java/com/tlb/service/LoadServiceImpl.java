@@ -1,6 +1,6 @@
 package com.tlb.service;
 
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +34,7 @@ public class LoadServiceImpl implements LoadService {
 	}
 
 	@Override
-	public List<TruckLoad> searchLoadByPickUpDate(LocalDate date) {
+	public List<TruckLoad> searchLoadByPickUpDate(Date date) {
 		return loadRepository.findByPickupDate(date);
 	}
 
@@ -45,19 +45,19 @@ public class LoadServiceImpl implements LoadService {
 	}
 
 	@Override
-	public List<TruckLoad> searchLoadByLoadIdAndPickUpDate(String loadId, LocalDate date) {
+	public List<TruckLoad> searchLoadByLoadIdAndPickUpDate(String loadId, Date date) {
 		
 		return loadRepository.findByLoadIdAndPickupDate(loadId,date);
 	}
 
 	@Override
-	public List<TruckLoad> searchLoadByPickUpLocationAndPickUpDate(String location, LocalDate date) {
+	public List<TruckLoad> searchLoadByPickUpLocationAndPickUpDate(String location, Date date) {
 		
 		return loadRepository.findByPickupLocationAndPickupDate(location,date);
 	}
 
 	@Override
-	public List<TruckLoad> searchLoadByLoadIdAndPickUpLocationAndPickUpDate(String loadId, String location, LocalDate date) {
+	public List<TruckLoad> searchLoadByLoadIdAndPickUpLocationAndPickUpDate(String loadId, String location, Date date) {
 		
 		return loadRepository.findByLoadIdAndPickupLocationAndPickupDate(loadId,location,date);
 	}
@@ -116,7 +116,7 @@ public class LoadServiceImpl implements LoadService {
 	}
 
 	@Override
-	public List<TruckLoad> searchLoadByPickUpDateAndBookingStatus(LocalDate date, String bookingStatus) {
+	public List<TruckLoad> searchLoadByPickUpDateAndBookingStatus(Date date, String bookingStatus) {
 		return loadRepository.findByPickupDateAndBookingStatus(date,bookingStatus);
 	}
 
@@ -127,19 +127,19 @@ public class LoadServiceImpl implements LoadService {
 	}
 
 	@Override
-	public List<TruckLoad> searchLoadByLoadIdAndPickUpDateAndBookingStatus(String loadId, LocalDate date, String bookingStatus) {
+	public List<TruckLoad> searchLoadByLoadIdAndPickUpDateAndBookingStatus(String loadId, Date date, String bookingStatus) {
 		
 		return loadRepository.findByLoadIdAndPickupDateAndBookingStatus(loadId,date,bookingStatus);
 	}
 
 	@Override
-	public List<TruckLoad> searchLoadByPickUpLocationAndPickUpDateAndBookingStatus(String location, LocalDate date, String bookingStatus) {
+	public List<TruckLoad> searchLoadByPickUpLocationAndPickUpDateAndBookingStatus(String location, Date date, String bookingStatus) {
 		
 		return loadRepository.findByPickupLocationAndPickupDateAndBookingStatus(location,date,bookingStatus);
 	}
 
 	@Override
-	public List<TruckLoad> searchLoadByLoadIdAndPickUpLocationAndPickUpDateAndBookingStatus(String loadId, String location, LocalDate date, String bookingStatus) {
+	public List<TruckLoad> searchLoadByLoadIdAndPickUpLocationAndPickUpDateAndBookingStatus(String loadId, String location, Date date, String bookingStatus) {
 		
 		return loadRepository.findByLoadIdAndPickupLocationAndPickupDateAndBookingStatus(loadId,location,date,bookingStatus);
 	}

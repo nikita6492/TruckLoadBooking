@@ -1,5 +1,6 @@
 package com.tlb.controller;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class LoadController {
 	@GetMapping("/api/v1/tlb/search")
 	public List<TruckLoad> searchload(@RequestParam(name = "loadId", required = false) String loadId,
 			@RequestParam(name = "pickupLocation", required = false) String pickupLocation,
-			@RequestParam(name = "pickupDate", required = false)@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate pickupDate) throws Exception {
+			@RequestParam(name = "pickupDate", required = false) Date pickupDate) throws Exception {
 		List<TruckLoad> load = null;
 		if((loadId!=null) && (pickupLocation==null || pickupLocation.isEmpty()) && (pickupDate==null )) {
 			load=loadService.searchLoadByLoadId(loadId);
@@ -63,7 +64,7 @@ public class LoadController {
 	@GetMapping("/api/v1/tlb/search/driver")
 	public List<TruckLoad> searchloadByDriver(@RequestParam(name = "loadId", required = false) String loadId,
 			@RequestParam(name = "pickupLocation", required = false) String pickupLocation,
-			@RequestParam(name = "pickupDate", required = false)@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate pickupDate) throws Exception {
+			@RequestParam(name = "pickupDate", required = false) Date pickupDate) throws Exception {
 		List<TruckLoad> load = null;
 		if((loadId!=null) && (pickupLocation==null || pickupLocation.isEmpty()) && (pickupDate==null )) {
 			load=loadService.searchLoadByLoadIdAndBookingStatus(loadId,null);
@@ -92,6 +93,7 @@ public class LoadController {
 	@PostMapping("/api/v1/tlb/createLoad")
 	public ResponseEntity<?> createLoad(@RequestBody TruckLoad load) throws Exception {
 		try {
+			System.out.print(load.getDropDate());
 		loadService.createLoad(load);
 		return new ResponseEntity("Load created!!",HttpStatus.OK);
 		}catch(Exception ex) {
@@ -111,14 +113,16 @@ public class LoadController {
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@PostMapping("/api/v1/tlb/bookLoad/{loadId}/{email}")
-	public ResponseEntity<?> bookLoad(@PathVariable("loadId") String loadId, @PathVariable("email") String email){
+	@PostMapping("/api/v1/tlb/bookLoad/{loadId}")
+	public ResponseEntity<?> bookLoad(@PathVariable("loadId") String loadId, @RequestParam(name ="email") String email){
 		try {
-			//User user=restTemplate.getForObject("http://localhost:8090/api/v1/tlb/fetchDriverId/"+email, User.class);
+			//User user=restTemplate.getForObject("http://ec2-43-206-111-226.ap-northeast-1.compute.amazonaws.com:8090/api/v1/tlb/fetchDriverId/"+email, User.class);
 			ParameterizedTypeReference<User> typeRef = new ParameterizedTypeReference<User>() {
 			};
+			//write these urls in properties file
+			//Webclient instead of rest template
 			ResponseEntity<User> responseEntity = restTemplate.exchange(
-					"http://localhost:8090/api/v1/tlb/fetchDriverId/" + email, HttpMethod.GET,
+					"http://ec2-43-206-111-226.ap-northeast-1.compute.amazonaws.com:8090/api/v1/tlb/fetchDriverId?email=" + email, HttpMethod.GET,
 					null, typeRef);
 			User user = responseEntity.getBody();
 			loadService.bookLoad(loadId, user.getUserId());
@@ -129,14 +133,14 @@ public class LoadController {
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@PostMapping("/api/v1/tlb/intransitLoad/{loadId}/{email}")
-	public ResponseEntity<?> inTransitLoad(@PathVariable("loadId") String loadId, @PathVariable("email") String email){
+	@PostMapping("/api/v1/tlb/intransitLoad/{loadId}")
+	public ResponseEntity<?> inTransitLoad(@PathVariable("loadId") String loadId, @RequestParam(name = "email") String email){
 		try {
-			//User user=restTemplate.getForObject("http://localhost:8090/api/v1/tlb/fetchDriverId/"+email, User.class);
+			//User user=restTemplate.getForObject("http://ec2-43-206-111-226.ap-northeast-1.compute.amazonaws.com:8090/api/v1/tlb/fetchDriverId/"+email, User.class);
 			ParameterizedTypeReference<User> typeRef = new ParameterizedTypeReference<User>() {
 			};
 			ResponseEntity<User> responseEntity = restTemplate.exchange(
-					"http://localhost:8090/api/v1/tlb/fetchDriverId/" + email, HttpMethod.GET,
+					"http://ec2-43-206-111-226.ap-northeast-1.compute.amazonaws.com:8090/api/v1/tlb/fetchDriverId?email=" + email, HttpMethod.GET,
 					null, typeRef);
 			User user = responseEntity.getBody();
 			loadService.intransitLoad(loadId, user.getUserId());
@@ -147,14 +151,14 @@ public class LoadController {
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@PostMapping("/api/v1/tlb/completeLoad/{loadId}/{email}")
-	public ResponseEntity<?> completeLoad(@PathVariable("loadId") String loadId, @PathVariable("email") String email){
+	@PostMapping("/api/v1/tlb/completeLoad/{loadId}")
+	public ResponseEntity<?> completeLoad(@PathVariable("loadId") String loadId, @RequestParam(name ="email") String email){
 		try {
-			//User user=restTemplate.getForObject("http://localhost:8090/api/v1/tlb/fetchDriverId/"+email, User.class);
+			//User user=restTemplate.getForObject("http://ec2-43-206-111-226.ap-northeast-1.compute.amazonaws.com:8090/api/v1/tlb/fetchDriverId/"+email, User.class);
 			ParameterizedTypeReference<User> typeRef = new ParameterizedTypeReference<User>() {
 			};
 			ResponseEntity<User> responseEntity = restTemplate.exchange(
-					"http://localhost:8090/api/v1/tlb/fetchDriverId/" + email, HttpMethod.GET,
+					"http://ec2-43-206-111-226.ap-northeast-1.compute.amazonaws.com:8090/api/v1/tlb/fetchDriverId?email=" + email, HttpMethod.GET,
 					null, typeRef);
 			User user = responseEntity.getBody();
 			loadService.completeLoad(loadId, user.getUserId());
@@ -164,14 +168,14 @@ public class LoadController {
 			}
 	}
 	
-	@GetMapping("/api/v1/tlb/viewBookedLoads/{email}")
-	public List<TruckLoad> viewBookedLoads(@PathVariable("email") String email) throws Exception{
+	@GetMapping("/api/v1/tlb/viewBookedLoads")
+	public List<TruckLoad> viewBookedLoads(@RequestParam(name ="email") String email) throws Exception{
 		try {
-			//User user=restTemplate.getForObject("http://localhost:8090/api/v1/tlb/fetchDriverId/"+email, User.class);
+			//User user=restTemplate.getForObject("http://ec2-43-206-111-226.ap-northeast-1.compute.amazonaws.com:8090/api/v1/tlb/fetchDriverId/"+email, User.class);
 			ParameterizedTypeReference<User> typeRef = new ParameterizedTypeReference<User>() {
 			};
 			ResponseEntity<User> responseEntity = restTemplate.exchange(
-					"http://localhost:8090/api/v1/tlb/fetchDriverId/" + email, HttpMethod.GET,
+					"http://ec2-43-206-111-226.ap-northeast-1.compute.amazonaws.com:8090/api/v1/tlb/fetchDriverId?email=" + email, HttpMethod.GET,
 					null, typeRef);
 			User user = responseEntity.getBody();
 			List<TruckLoad> load=loadService.viewBookedLoads(user.getUserId());
@@ -181,14 +185,14 @@ public class LoadController {
 			}
 	}
 	
-	@GetMapping("/api/v1/tlb/viewInTransitLoads/{email}")
-	public List<TruckLoad> viewInTransitLoads(@PathVariable("email") String email) throws Exception{
+	@GetMapping("/api/v1/tlb/viewInTransitLoads")
+	public List<TruckLoad> viewInTransitLoads(@RequestParam(name ="email") String email) throws Exception{
 		try {
-			//User user=restTemplate.getForObject("http://localhost:8090/api/v1/tlb/fetchDriverId/"+email, User.class);
+			//User user=restTemplate.getForObject("http://ec2-43-206-111-226.ap-northeast-1.compute.amazonaws.com:8090/api/v1/tlb/fetchDriverId/"+email, User.class);
 			ParameterizedTypeReference<User> typeRef = new ParameterizedTypeReference<User>() {
 			};
 			ResponseEntity<User> responseEntity = restTemplate.exchange(
-					"http://localhost:8090/api/v1/tlb/fetchDriverId/" + email, HttpMethod.GET,
+					"http://ec2-43-206-111-226.ap-northeast-1.compute.amazonaws.com:8090/api/v1/tlb/fetchDriverId?email=" + email, HttpMethod.GET,
 					null, typeRef);
 			User user = responseEntity.getBody();
 			List<TruckLoad> load=loadService.viewInTransitLoads(user.getUserId());
@@ -198,14 +202,14 @@ public class LoadController {
 			}
 	}
 	
-	@GetMapping("/api/v1/tlb/viewCompletedLoads/{email}")
-	public List<TruckLoad> viewCompletedLoads(@PathVariable("email") String email) throws Exception{
+	@GetMapping("/api/v1/tlb/viewCompletedLoads")
+	public List<TruckLoad> viewCompletedLoads(@RequestParam(name ="email") String email) throws Exception{
 		try {
-			//User user=restTemplate.getForObject("http://localhost:8090/api/v1/tlb/fetchDriverId/"+email, User.class);
+			//User user=restTemplate.getForObject("http://ec2-43-206-111-226.ap-northeast-1.compute.amazonaws.com:8090/api/v1/tlb/fetchDriverId/"+email, User.class);
 			ParameterizedTypeReference<User> typeRef = new ParameterizedTypeReference<User>() {
 			};
 			ResponseEntity<User> responseEntity = restTemplate.exchange(
-					"http://localhost:8090/api/v1/tlb/fetchDriverId/" + email, HttpMethod.GET,
+					"http://ec2-43-206-111-226.ap-northeast-1.compute.amazonaws.com:8090/api/v1/tlb/fetchDriverId?email=" + email, HttpMethod.GET,
 					null, typeRef);
 			User user = responseEntity.getBody();
 			List<TruckLoad> load=loadService.viewCompletedLoads(user.getUserId());
